@@ -37,7 +37,10 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- ")
+    print("2- Consultar los Top x videos por promedio")
+    print("3- Consultar los videos por autor")
+    print("4- Videos por genero")
+    print("0- Salir")
 
 catalog = None
 
