@@ -31,18 +31,98 @@ from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
 """
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
+Se define la estructura de un catálogo de videos. El catálogo tendrá dos
+listas, una para los videos, otra para las categorias de
 los mismos.
 """
 
 # Construccion de modelos
 
+
+def newCatalog():
+    """
+    Inicializa el catálogo de libros. Crea una lista vacia para guardar
+    todos los libros, adicionalmente, crea una lista vacia para los autores,
+    una lista vacia para los generos y una lista vacia para la asociación
+    generos y libros. Retorna el catalogo inicializado.
+    """
+    catalog = {'videos': None,
+               'categpries': None,
+               'countries': None,
+               'video_tags': None}
+
+    catalog['videos'] = lt.newList()
+    catalog['tags'] = lt.newList('ARRAY_LIST')
+    catalog['countries'] = lt.newList('SINGLE_LINKED',
+                                        cmpfunction=comparecountries)
+    catalog['categories'] = lt.newList('SINGLE_LINKED')
+
+    return catalog
+
 # Funciones para agregar informacion al catalogo
 
+
+def addVideo(catalog, video):
+    # Se adiciona el video a la lista de videos
+    lt.addLast(catalog['videos'], video)
+    # Se obtienen los tags del video
+    country_name = video['country'].strip()
+    # Cada tag, se crea en la lista de videos del catalogo, y se
+    # crea un video en la lista de dicho tag (apuntador al libro)
+    addVideoCountry(catalog, country_name, video)
+
+
+def addVideoCountry(catalog, country_name, video):
+    """
+    Adiciona un tag a lista de tags, la cual guarda referencias
+    a los videos que tienen ese tag
+    """
+    countries = catalog['countries']
+    posCountry = lt.isPresent(countries, country_name)
+    if posCountry > 0:
+        country = lt.getElement(countries, posCountry)
+    else:
+        country = newCountry(country_name)
+        lt.addLast(countries, country)
+    lt.addLast(country['videos'], video)
+
+
+def addCategory(catalog, category):
+    """
+    Adiciona un tag a la lista de tags
+    """
+    c = newCategory(category['id'], category['name'])
+    lt.addLast(catalog['categories'], c)
+
+
 # Funciones para creacion de datos
+
+def newCountry(name):
+    """
+    Crea una nueva estructura para modelar los libros de
+    un autor y su promedio de ratings
+    """
+    country = {'name': "", "videos": None}
+    country['name'] = name
+    country['videos'] = lt.newList('ARRAY_LIST')
+    return country
+
+
+def newCategory(name, id):
+    """
+    Esta estructura almancena los tags utilizados para marcar libros.
+    """
+    category = {'name': '', 'tag_id': ''}
+    category['name'] = name
+    category['category-id'] = id
+    return category
+
 
 # Funciones de consulta
 
 # Funciones utilizadas para comparar elementos dentro de una lista
-
+def comparecountries(countryname1, country):
+    if (countryname1.lower() in country['name'].lower()):
+        return 0
+    return -1
 # Funciones de ordenamiento
