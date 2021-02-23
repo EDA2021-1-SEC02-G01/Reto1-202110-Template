@@ -76,7 +76,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o",
+        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o" +
                           "ingrese '2' si desea una tipo 'LINKED':\n")
         print("Cargando información de los archivos ....")
         if list_type == "1":
@@ -92,8 +92,8 @@ while True:
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
         if int(size) <= lt.size(catalog['videos']):
-            sort_type = input("Indique el tipo de ordenamiento deseado ('se'",
-                              "para selectionsort, 'ins' para insertionsort,",
+            sort_type = input("Indique el tipo de ordenamiento deseado ('se'" +
+                              "para selectionsort, 'ins' para insertionsort," +
                               "'sa' para shellsort):\n")
             result = controller.sortVideos(catalog, int(size), sort_type)
             print("Para la muestra de", size, " elementos, el tiempo",
