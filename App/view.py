@@ -55,10 +55,10 @@ def loadData(catalog):
     controller.loadData(catalog)
 
 
-def printResults(ord_videos, sample):
+def printResults(ord_videos, sample=10):
     size = lt.size(ord_videos)
     if size > sample:
-        print("Los primeros ", sample, " libros ordenados son:")
+        print("Los primeros ", sample, " videos ordenados son:")
         i = 1
         while i <= sample:
             video = lt.getElement(ord_videos, i)
@@ -76,7 +76,8 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o ingrese '2' si desea una tipo 'LINKED':\n")
+        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o",
+                          "ingrese '2' si desea una tipo 'LINKED':\n")
         print("Cargando información de los archivos ....")
         if list_type == "1":
             catalog = initCatalog("ARRAY_LIST")
@@ -86,15 +87,23 @@ while True:
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Paises cargados: ' + str(lt.size(catalog['countries'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['categories'])))
+        print(str(lt.firstElement(catalog['videos'])))
 
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
-        sort_type = input("Indique el tipo de ordenamiento deseado ('se' para selectionsort, 'ins' para insertionsort, 'sa' para shellsort):\n")
-        result = controller.sortVideos(catalog, int(size), sort_type)
-        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
-                                          str(result[0]))
-        printResults(result[1], int(size))
-
+        if int(size) <= lt.size(catalog['videos']):
+            sort_type = input("Indique el tipo de ordenamiento deseado ('se'",
+                              "para selectionsort, 'ins' para insertionsort,",
+                              "'sa' para shellsort):\n")
+            result = controller.sortVideos(catalog, int(size), sort_type)
+            print("Para la muestra de", size, " elementos, el tiempo",
+                  "(mseg) es: ", str(result[0]))
+            printResults(result[1])
+        else:
+            print("No se puede ingresar un tamaño de muestra superior a los",
+                  "videos cargados")
+            print("Recuerde")
+            print("Videos cargados:" + str(lt.size(catalog['videos'])) + "\n")
     else:
         sys.exit(0)
 sys.exit(0)

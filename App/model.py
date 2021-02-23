@@ -54,10 +54,11 @@ def newCatalog(list_type: str):
                'countries': None,
                'video_tags': None}
 
-    catalog['videos'] = lt.newList()
-    catalog['tags'] = lt.newList(list_type)
-    catalog['countries'] = lt.newList(list_type, cmpfunction=comparecountries)
-    catalog['categories'] = lt.newList(list_type)
+    catalog['videos'] = lt.newList(list_type)
+    catalog['tags'] = lt.newList("ARRAY_LIST")
+    catalog['countries'] = lt.newList("ARRAY_LIST",
+                                      cmpfunction=comparecountries)
+    catalog['categories'] = lt.newList("ARRAY_LIST")
 
     return catalog
 
@@ -91,7 +92,7 @@ def addVideoCountry(catalog, country_name, video):
 
 def addCategory(catalog, category):
     """
-    Adiciona un tag a la lista de tags
+    Adiciona una categoría a la lista de categorías
     """
     c = newCategory(category['id'], category['name'])
     lt.addLast(catalog['categories'], c)
@@ -112,7 +113,7 @@ def newCountry(name):
 
 def newCategory(name, id):
     """
-    Esta estructura almancena los tags utilizados para marcar libros.
+    Esta estructura crea las categorías utilizadas para marcar videos.
     """
     category = {'name': '', 'tag_id': ''}
     category['name'] = name
@@ -132,12 +133,12 @@ def comparecountries(countryname1, country):
 def cmpVideosByViews(video1, video2):
     """
     Devuelve verdadero (True) si los 'views' de video1
-    son menores que los del video2
+    son mayores que los del video2
     Args:
     video1: informacion del primer video que incluye su valor 'views'
     video2: informacion del segundo video que incluye su valor 'views'
     """
-    return video1['views'] < video2['views']
+    return int(video1['views']) > int(video2['views'])
 
 
 # Funciones de ordenamiento
