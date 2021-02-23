@@ -26,7 +26,10 @@
 
 
 import config as cf
+import time
 from DISClib.ADT import list as lt
+from DISClib.Algorithms.Sorting import selectionsort as se
+from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -39,7 +42,7 @@ los mismos.
 # Construccion de modelos
 
 
-def newCatalog():
+def newCatalog(list_type: str):
     """
     Inicializa el catálogo de libros. Crea una lista vacia para guardar
     todos los libros, adicionalmente, crea una lista vacia para los autores,
@@ -52,10 +55,9 @@ def newCatalog():
                'video_tags': None}
 
     catalog['videos'] = lt.newList()
-    catalog['tags'] = lt.newList('ARRAY_LIST')
-    catalog['countries'] = lt.newList('SINGLE_LINKED',
-                                        cmpfunction=comparecountries)
-    catalog['categories'] = lt.newList('SINGLE_LINKED')
+    catalog['tags'] = lt.newList(list_type)
+    catalog['countries'] = lt.newList(list_type, cmpfunction=comparecountries)
+    catalog['categories'] = lt.newList(list_type)
 
     return catalog
 
@@ -125,4 +127,31 @@ def comparecountries(countryname1, country):
     if (countryname1.lower() in country['name'].lower()):
         return 0
     return -1
+
+
+def cmpVideosByViews(video1, video2):
+    """
+    Devuelve verdadero (True) si los 'views' de video1
+    son menores que los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'views'
+    video2: informacion del segundo video que incluye su valor 'views'
+    """
+    return video1['views'] < video2['views']
+
+
 # Funciones de ordenamiento
+
+def sortVideos(catalog, size, sort_type):
+    sub_list = lt.subList(catalog['videos'], 1, size)
+    sub_list = sub_list.copy()
+    start_time = time.process_time()
+    if sort_type == "se":
+        sorted_list = se.sort(sub_list, cmpVideosByViews)
+    elif sort_type == "ins":
+        sorted_list = ins.sort(sub_list, cmpVideosByViews)
+    elif sort_type == "sa":
+        sorted_list = sa.sort(sub_list, cmpVideosByViews)
+    stop_time = time.process_time()
+    elapsed_time_mseg = (stop_time - start_time)*1000
+    return elapsed_time_mseg, sorted_list

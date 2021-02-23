@@ -38,13 +38,14 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
+    print("2- Ordenar videos por views")
 
 
-def initCatalog():
+def initCatalog(list_type: str):
     """
     Inicializa el catalogo de libros
     """
-    return controller.initCatalog()
+    return controller.initCatalog(list_type)
 
 
 def loadData(catalog):
@@ -52,6 +53,18 @@ def loadData(catalog):
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
+
+
+def printResults(ord_videos, sample):
+    size = lt.size(ord_videos)
+    if size > sample:
+        print("Los primeros ", sample, " libros ordenados son:")
+        i = 1
+        while i <= sample:
+            video = lt.getElement(ord_videos, i)
+            print('Titulo: ' + video['title'] + ' Canal: ' +
+                  video['channel_title'] + ' Views: ' + video['views'])
+            i += 1
 
 
 catalog = None
@@ -63,15 +76,24 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o ingrese '2' si desea una tipo 'LINKED':\n")
         print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        if list_type == "1":
+            catalog = initCatalog("ARRAY_LIST")
+        else:
+            catalog = initCatalog("SINGLE_LINKED")
         loadData(catalog)
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Paises cargados: ' + str(lt.size(catalog['countries'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['categories'])))
 
     elif int(inputs[0]) == 2:
-        print()
+        size = input("Indique tamaño de la muestra: ")
+        sort_type = input("Indique el tipo de ordenamiento deseado ('se' para selectionsort, 'ins' para insertionsort, 'sa' para shellsort):\n")
+        result = controller.sortVideos(catalog, int(size), sort_type)
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ",
+                                          str(result[0]))
+        printResults(result[1], int(size))
 
     else:
         sys.exit(0)
