@@ -39,6 +39,7 @@ def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Ordenar videos por views")
+    print("0- Salir")
 
 
 def initCatalog(list_type: str):
@@ -87,7 +88,16 @@ while True:
         print('Videos cargados: ' + str(lt.size(catalog['videos'])))
         print('Paises cargados: ' + str(lt.size(catalog['countries'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['categories'])))
-        print(str(lt.firstElement(catalog['videos'])))
+        first_video = lt.firstElement(catalog['videos'])
+        """
+        print('Titulo: ', + first_video['title'] + 'Canal: ' + first_video['cannel_title'] +
+              'Dia de trending: ' + first_video['trending_date'] + 'Pais: ' + 
+              first_video['country'] + 'Vistas: ' + first_video['views'] + 'Me gusta: ' +
+              first_video['likes'] + 'No me gusta: ' + first_video['dislikes']
+        )
+        """
+        for category in catalog['categories']:
+            print(category + ':' + str(catalog['categories'][category]))
 
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
