@@ -89,13 +89,14 @@ while True:
         print('Paises cargados: ' + str(lt.size(catalog['countries'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['categories'])))
         first_video = lt.firstElement(catalog['videos'])
-        """
-        print('Titulo: ', + first_video['title'] + 'Canal: ' + first_video['cannel_title'] +
-              'Dia de trending: ' + first_video['trending_date'] + 'Pais: ' + 
-              first_video['country'] + 'Vistas: ' + first_video['views'] + 'Me gusta: ' +
-              first_video['likes'] + 'No me gusta: ' + first_video['dislikes']
-        )
-        """
+        print('Titulo: ', + first_video['title'] +
+              'Canal: ' + first_video['channel_title'] +
+              'Dia de trending: ' + first_video['trending_date'] +
+              'Pais: ' + first_video['country'] +
+              'Vistas: ' + first_video['views'] +
+              'Me gusta: ' + first_video['likes'] +
+              'No me gusta: ' + first_video['dislikes']
+              )
         for category in catalog['categories']:
             print(category + ':' + str(catalog['categories'][category]))
 
