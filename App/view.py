@@ -89,7 +89,7 @@ while True:
         print('Paises cargados: ' + str(lt.size(catalog['countries'])))
         print('Categorias cargadas: ' + str(lt.size(catalog['categories'])))
         first_video = lt.firstElement(catalog['videos'])
-        print('Titulo: ', + first_video['title'] +
+        print('Titulo: ' + first_video['title'] +
               'Canal: ' + first_video['channel_title'] +
               'Dia de trending: ' + first_video['trending_date'] +
               'Pais: ' + first_video['country'] +
@@ -105,7 +105,8 @@ while True:
         if int(size) <= lt.size(catalog['videos']):
             sort_type = input("Indique el tipo de ordenamiento deseado ('se'" +
                               "para selectionsort, 'ins' para insertionsort," +
-                              "'sa' para shellsort):\n")
+                              "'sa' para shellsort, 'mg' para merge sort, 'qk'"
+                              + " para quick sort):\n")
             result = controller.sortVideos(catalog, int(size), sort_type)
             print("Para la muestra de", size, " elementos, el tiempo",
                   "(mseg) es: ", str(result[0]))
