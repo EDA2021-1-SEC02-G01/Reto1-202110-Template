@@ -103,10 +103,12 @@ while True:
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
         if int(size) <= lt.size(catalog['videos']):
-            sort_type = input("Indique el tipo de ordenamiento deseado ('se'" +
-                              "para selectionsort, 'ins' para insertionsort," +
-                              "'sa' para shellsort, 'mg' para merge sort, 'qk'"
-                              + " para quick sort):\n")
+            sort_type = input("Indique el tipo de ordenamiento deseado\n" + 
+                              "'se' para selectionsort,\n" + 
+                              "'ins' para insertionsort,\n" +
+                              "'sa' para shellsort, \n" + 
+                              "'mg' para merge sort,\n" +  
+                              "'qk' para quick sort:\n")
             result = controller.sortVideos(catalog, int(size), sort_type)
             print("Para la muestra de", size, " elementos, el tiempo",
                   "(mseg) es: ", str(result[0]))
