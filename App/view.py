@@ -90,24 +90,27 @@ while True:
         print('Categorias cargadas: ' + str(lt.size(catalog['categories'])))
         first_video = lt.firstElement(catalog['videos'])
         print('Titulo: ' + first_video['title'] +
-              'Canal: ' + first_video['channel_title'] +
-              'Dia de trending: ' + first_video['trending_date'] +
-              'Pais: ' + first_video['country'] +
-              'Vistas: ' + first_video['views'] +
-              'Me gusta: ' + first_video['likes'] +
-              'No me gusta: ' + first_video['dislikes']
+              ', Canal: ' + first_video['channel_title'] +
+              ', Dia de trending: ' + first_video['trending_date'] +
+              ', Pais: ' + first_video['country'] +
+              ', Vistas: ' + first_video['views'] +
+              ', Me gusta: ' + first_video['likes'] +
+              ', No me gusta: ' + first_video['dislikes']
               )
-        for category in catalog['categories']:
-            print(category + ':' + str(catalog['categories'][category]))
+        print("\n")
+        poslist = 1
+        while poslist <= lt.size(catalog['categories']):
+            print(lt.getElement(catalog['categories'], poslist))
+            poslist += 1
 
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
         if int(size) <= lt.size(catalog['videos']):
-            sort_type = input("Indique el tipo de ordenamiento deseado\n" + 
-                              "'se' para selectionsort,\n" + 
+            sort_type = input("Indique el tipo de ordenamiento deseado\n" +
+                              "'se' para selectionsort,\n" +
                               "'ins' para insertionsort,\n" +
-                              "'sa' para shellsort, \n" + 
-                              "'mg' para merge sort,\n" +  
+                              "'sa' para shellsort, \n" +
+                              "'mg' para merge sort,\n" +
                               "'qk' para quick sort:\n")
             result = controller.sortVideos(catalog, int(size), sort_type)
             print("Para la muestra de", size, " elementos, el tiempo",
