@@ -117,7 +117,7 @@ def newCategory(name, id):
     """
     Esta estructura crea las categorías utilizadas para marcar videos.
     """
-    category = {'name': '', 'tag_id': ''}
+    category = {'name': '', 'category_id': ''}
     category['name'] = name
     category['category-id'] = id
     return category

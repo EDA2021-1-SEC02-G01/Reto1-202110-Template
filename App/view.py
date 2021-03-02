@@ -104,7 +104,7 @@ while True:
         size = input("Indique tamaño de la muestra: ")
         if int(size) <= lt.size(catalog['videos']):
             sort_type = input("Indique el tipo de ordenamiento deseado\n" + 
-                              "'se' para selectionsort,\n" + 
+                              "'se' para selectionsort,\n1" + 
                               "'ins' para insertionsort,\n" +
                               "'sa' para shellsort, \n" + 
                               "'mg' para merge sort,\n" +  
