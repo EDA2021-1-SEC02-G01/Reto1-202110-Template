@@ -60,7 +60,8 @@ def newCatalog(list_type: str):
     catalog['tags'] = lt.newList("ARRAY_LIST")
     catalog['countries'] = lt.newList("ARRAY_LIST",
                                       cmpfunction=comparecountries)
-    catalog['categories'] = lt.newList("ARRAY_LIST")
+    catalog['categories'] = lt.newList("ARRAY_LIST",
+                                       cmpfunction=cmpCategoriesById)
 
     return catalog
 
@@ -113,11 +114,11 @@ def newCountry(name):
     return country
 
 
-def newCategory(name, id):
+def newCategory(id, name):
     """
     Esta estructura crea las categorías utilizadas para marcar videos.
     """
-    category = {'name': '', 'category_id': ''}
+    category = {'category-id': '', 'name': ''}
     category['name'] = name
     category['category-id'] = id
     return category
@@ -141,6 +142,10 @@ def cmpVideosByViews(video1, video2):
     video2: informacion del segundo video que incluye su valor 'views'
     """
     return int(video1['views']) > int(video2['views'])
+
+
+def cmpCategoriesById(category1, category2):
+    return int(category1["category-id"]) < int(category1["category-id"])
 
 
 # Funciones de ordenamiento
