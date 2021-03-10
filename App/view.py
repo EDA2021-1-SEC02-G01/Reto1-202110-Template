@@ -38,8 +38,7 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Ordenar videos por views")
-    print("3- n videos con mas views que son tendencia en un pais " +
+    print("2- n videos con mas views que son tendencia en un pais " +
           "determinada una categoria especifica (Req.1)")
     print("0- Salir")
 
@@ -104,25 +103,6 @@ while True:
         poslist = 1
 
     elif int(inputs[0]) == 2:
-        size = input("Indique tamaño de la muestra: ")
-        if int(size) <= lt.size(catalog['videos']):
-            sort_type = input("Indique el tipo de ordenamiento deseado\n" +
-                              "'se' para selectionsort,\n" +
-                              "'ins' para insertionsort,\n" +
-                              "'sa' para shellsort, \n" +
-                              "'mg' para merge sort,\n" +
-                              "'qk' para quick sort:\n")
-            result = controller.sortVideos(catalog, int(size), sort_type)
-            print("Para la muestra de", size, " elementos, el tiempo",
-                  "(mseg) es: ", str(result[0]))
-            printResults(result[1])
-        else:
-            print("No se puede ingresar un tamaño de muestra superior a los",
-                  "videos cargados")
-            print("Recuerde")
-            print("Videos cargados:" + str(lt.size(catalog['videos'])) + "\n")
-
-    elif int(inputs[0]) == 3:
         category_name = input("Indique el nombre de la categoria que quiere " +
                               "consultar: ")
         country = input("Indique el pais de los videos que quiere consultar: ")
