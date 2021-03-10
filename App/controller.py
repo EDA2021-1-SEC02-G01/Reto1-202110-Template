@@ -94,4 +94,15 @@ def sortVideolt(videos):
     """
     return model.sortVideoslt(videos)
 
+
 # Funciones de consulta sobre el catálogo
+
+def getTrendingVidByCountry(catalog, country_name):
+    """
+    Retorna el video que más dias ha estado en trending
+    para un país específico
+    """
+    return model.getTrendingVidByCountry(catalog, country_name)
+
+
+

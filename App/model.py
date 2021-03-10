@@ -82,24 +82,24 @@ def addVideo(catalog, video):
                 'category_id': video['category_id'].strip()}
     # Se adiciona el video a la lista de videos
     lt.addLast(catalog['videos'], filtrado)
-    # Se obtienen los tags del video
+    # Se obtienen los paises del video
     country_name = video['country'].strip()
-    # Cada tag, se crea en la lista de videos del catalogo, y se
-    # crea un video en la lista de dicho tag (apuntador al libro)
-    addVideoCountry(catalog, country_name, video)
+    # Cada pais se crea en la lista de paises del catalogo, y se
+    # crea un video en la lista de dicho pais (apuntador al video)
+    addVideoCountry(catalog, country_name, filtrado)
 
 
 def addVideoCountry(catalog, country_name, video):
     """
-    Adiciona un tag a lista de tags, la cual guarda referencias
-    a los videos que tienen ese tag
+    Adiciona un pais a lista de paises, la cual guarda referencias
+    a los videos que tienen ese pais
     """
     countries = catalog['countries']
-    posCountry = lt.isPresent(countries, country_name)
+    posCountry = lt.isPresent(countries, country_name.lower())
     if posCountry > 0:
         country = lt.getElement(countries, posCountry)
     else:
-        country = newCountry(country_name)
+        country = newCountry(country_name.lower())
         lt.addLast(countries, country)
     lt.addLast(country['videos'], video)
 
@@ -143,7 +143,26 @@ def videosCountryCategory(category_name, country, n_videos):
     pass
 
 
+def getTrendingVidByCountry(catalog, country_name):
+    """
+    Encuentra video que más apariciones tenga en la lista
+    """
+    countries = catalog['countries']
+    posCountry = lt.isPresent(countries, country_name.lower())
+    if posCountry > 0:
+        country = lt.getElement(countries, posCountry)
+
+    else:
+        return None
+
+    iteratorVideos = lti.newIterator(country["videos"])
+    while lti.hasNext(iteratorVideos):
+        video = lti.next(iteratorVideos)
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
+
+
 def comparecountries(countryname1, country):
     if (countryname1.lower() in country['name'].lower()):
         return 0
@@ -168,6 +187,11 @@ def cmpCategoriesById(category1, category2):
 # Funciones de ordenamiento
 
 def sortVideos(catalog, size, sort_type):
+    """
+    Esta función toma el catálogo de videos y los ordena por views dependiendo
+    del tamaño de muestra escogido y el tipo de ordenamiento.
+
+    """
     sub_list = lt.subList(catalog['videos'], 1, size)
     sub_list = sub_list.copy()
     start_time = time.process_time()

@@ -41,6 +41,8 @@ def printMenu():
     print("2- Ordenar videos por views")
     print("3- n videos con mas views que son tendencia en un pais " +
           "determinada una categoria especifica (Req.1)")
+    print("4- conocer cuál es el video que más días ha sido trending" +
+          " para un país específico (Req.2)")
     print("0- Salir")
 
 
@@ -141,6 +143,11 @@ while True:
                   'likes: ' + video['likes'],
                   'dislikes: ' + video['dislikes'])
             counter += 1
+
+    elif int(inputs[0]) == 4:
+        country_name = input("Ingrese el nombre del pais que desea buscar: ")
+        trendingVidCountry = controller.getTrendingVidByCountry(catalog,
+                                                                country_name)
 
     else:
         sys.exit(0)
