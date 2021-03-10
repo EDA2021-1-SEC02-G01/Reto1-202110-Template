@@ -76,8 +76,22 @@ def categoryId(catalog):
 
 def sortVideos(catalog, size, sort_type):
     """
-    Ordena los libros por average_rating
+    Ordena los videos
     """
     return model.sortVideos(catalog, size, sort_type)
 
+
+def sortCountry(catalog, category_name, country_name):
+    """
+    Ordena los videos por pais
+    """
+    return model.sortCountry(catalog, category_name, country_name)
+
+def sortVideolt(videos):
+    """
+    Ordena la lista de videos por views
+    """
+    return model.sortVideoslt(videos)
+
 # Funciones de consulta sobre el catálogo
+

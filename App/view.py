@@ -39,6 +39,8 @@ def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Ordenar videos por views")
+    print("3- n videos con mas views que son tendencia en un pais " +
+           "determinada una categoria especifica (Req.1)")
     print("0- Salir")
 
 
@@ -98,10 +100,8 @@ while True:
               ', No me gusta: ' + first_video['dislikes']
               )
         print("\n")
+        print(first_video)
         poslist = 1
-        while poslist <= lt.size(catalog['categories']):
-            print(lt.getElement(catalog['categories'], poslist))
-            poslist += 1
 
     elif int(inputs[0]) == 2:
         size = input("Indique tamaño de la muestra: ")
@@ -121,6 +121,25 @@ while True:
                   "videos cargados")
             print("Recuerde")
             print("Videos cargados:" + str(lt.size(catalog['videos'])) + "\n")
+
+    elif int(inputs[0]) == 3:
+        category_name = input("Indique el nombre de la categoria que quiere consultar: ")
+        country = input("Indique el pais de los videos que quiere consultar: ")
+        n_videos = int(input("Indique el tamaño de la muestra que quiere consultar: "))
+        videosByCC = controller.sortCountry(catalog, category_name, country)
+        videosCCSorted = controller.sortVideolt(videosByCC)
+        counter = 1
+        while counter <= n_videos:
+            video = lt.getElement(videosCCSorted, counter)
+            print('trending_date: ' + video['trending_date'],
+                  'title: ' + video['title'],
+                  'channel_title: ' + video['channel_title'],
+                  'publish_time: ' + video['publish_time'],
+                  'views: ' + video['views'],
+                  'likes: ' + video['likes'],
+                  'dislikes: ' + video['dislikes'])
+            counter += 1
+
     else:
         sys.exit(0)
 sys.exit(0)

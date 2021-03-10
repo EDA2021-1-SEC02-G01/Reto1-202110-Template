@@ -28,6 +28,7 @@
 import config as cf
 import time
 from DISClib.ADT import list as lt
+from DISClib.DataStructures import listiterator as lti
 from DISClib.Algorithms.Sorting import selectionsort as se
 from DISClib.Algorithms.Sorting import insertionsort as ins
 from DISClib.Algorithms.Sorting import shellsort as sa
@@ -52,7 +53,7 @@ def newCatalog(list_type: str):
     generos y libros. Retorna el catalogo inicializado.
     """
     catalog = {'videos': None,
-               'categpries': None,
+               'categories': None,
                'countries': None,
                'video_tags': None}
 
@@ -69,8 +70,18 @@ def newCatalog(list_type: str):
 
 
 def addVideo(catalog, video):
+    #Filtramos la informacion del video con lo que necesitamos
+    filtrado = {'trending_date': video['trending_date'].strip(),
+                'title': video['title'].strip(),
+                'channel_title': video['channel_title'].strip(),
+                'publish_time': video['publish_time'].strip(),
+                'views': video['views'], 'likes': video['likes'].strip(),
+                'dislikes': video['dislikes'].strip(),
+                'country': video['country'].strip(),
+                'tags': video['tags'].strip(),
+                'category_id': video['category_id'].strip()}
     # Se adiciona el video a la lista de videos
-    lt.addLast(catalog['videos'], video)
+    lt.addLast(catalog['videos'], filtrado)
     # Se obtienen los tags del video
     country_name = video['country'].strip()
     # Cada tag, se crea en la lista de videos del catalogo, y se
@@ -97,8 +108,9 @@ def addCategory(catalog, category):
     """
     Adiciona una categoría a la lista de categorías
     """
-    c = newCategory(category['id'], category['name'])
-    lt.addLast(catalog['categories'], c)
+    c = newCategory(category['id'], category['name'], catalog['videos'])
+    if c not in catalog['categories']['elements']:
+        lt.addLast(catalog['categories'], c)
 
 
 # Funciones para creacion de datos
@@ -109,22 +121,27 @@ def newCountry(name):
     un autor y su promedio de ratings
     """
     country = {'name': "", "videos": None}
-    country['name'] = name
+    country['name'] = name.strip()
     country['videos'] = lt.newList('ARRAY_LIST')
     return country
 
 
-def newCategory(id, name):
+def newCategory(id, name, videos):
     """
     Esta estructura crea las categorías utilizadas para marcar videos.
     """
-    category = {'category-id': '', 'name': ''}
-    category['name'] = name
+    category = {'category-id': '', 'name': '', 'videos': ''}
+    category['name'] = name.strip()
     category['category-id'] = id
+    videosByCategory = categorySort(id, videos)
+    category['videos'] = videosByCategory
     return category
 
 
 # Funciones de consulta
+def videosCountryCategory(category_name, country, n_videos):
+    pass
+
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 def comparecountries(countryname1, country):
@@ -167,3 +184,36 @@ def sortVideos(catalog, size, sort_type):
     stop_time = time.process_time()
     elapsed_time_mseg = (stop_time - start_time)*1000
     return elapsed_time_mseg, sorted_list
+
+
+def categorySort(category_id, videos):
+    iterator = lti.newIterator(videos)
+    sub_list = lt.newList('ARRAY_LIST')
+    while lti.hasNext(iterator):
+        video = lti.next(iterator)
+        if int(video['category_id']) == int(category_id):
+            lt.addLast(sub_list, video)
+    return sub_list
+
+
+def sortCountry(catalog, category_name, country_name):
+    iteratorCategoriesAll = lti.newIterator(catalog['categories']) 
+    category = None
+    while lti.hasNext(iteratorCategoriesAll) and category == None:
+        element = lti.next(iteratorCategoriesAll)
+        print(category_name + element['name'])
+        if category_name.lower() == element['name'].lower():
+            category = element
+
+    iteratorCountry = lti.newIterator(category['videos'])
+    country_list = lt.newList('ARRAY_LIST')
+    while lti.hasNext(iteratorCountry):
+        video = lti.next(iteratorCountry)
+        if country_name.lower() == video['country'].lower():
+            lt.addLast(country_list, video)
+    return country_list
+
+
+def sortVideoslt(videos):
+    sorted_list = mg.sort(videos, cmpVideosByViews)
+    return sorted_list
