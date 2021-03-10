@@ -70,7 +70,7 @@ def newCatalog(list_type: str):
 
 
 def addVideo(catalog, video):
-    #Filtramos la informacion del video con lo que necesitamos
+    # Filtramos la informacion del video con lo que necesitamos
     filtrado = {'trending_date': video['trending_date'].strip(),
                 'title': video['title'].strip(),
                 'channel_title': video['channel_title'].strip(),
@@ -197,13 +197,14 @@ def categorySort(category_id, videos):
 
 
 def sortCountry(catalog, category_name, country_name):
-    iteratorCategoriesAll = lti.newIterator(catalog['categories']) 
+    iteratorCategoriesAll = lti.newIterator(catalog['categories'])
     category = None
-    while lti.hasNext(iteratorCategoriesAll) and category == None:
+    while lti.hasNext(iteratorCategoriesAll):
         element = lti.next(iteratorCategoriesAll)
         print(category_name + element['name'])
         if category_name.lower() == element['name'].lower():
             category = element
+            break
 
     iteratorCountry = lti.newIterator(category['videos'])
     country_list = lt.newList('ARRAY_LIST')

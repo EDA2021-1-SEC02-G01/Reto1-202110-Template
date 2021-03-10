@@ -87,6 +87,7 @@ def sortCountry(catalog, category_name, country_name):
     """
     return model.sortCountry(catalog, category_name, country_name)
 
+
 def sortVideolt(videos):
     """
     Ordena la lista de videos por views
@@ -94,4 +95,3 @@ def sortVideolt(videos):
     return model.sortVideoslt(videos)
 
 # Funciones de consulta sobre el catálogo
-

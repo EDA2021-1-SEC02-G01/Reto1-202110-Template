@@ -40,7 +40,7 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- Ordenar videos por views")
     print("3- n videos con mas views que son tendencia en un pais " +
-           "determinada una categoria especifica (Req.1)")
+          "determinada una categoria especifica (Req.1)")
     print("0- Salir")
 
 
@@ -79,7 +79,7 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o" +
+        list_type = input("Ingrese '1' si desea una  lista tipo 'ARRAY' o " +
                           "ingrese '2' si desea una tipo 'LINKED':\n")
         print("Cargando información de los archivos ....")
         if list_type == "1":
@@ -123,9 +123,11 @@ while True:
             print("Videos cargados:" + str(lt.size(catalog['videos'])) + "\n")
 
     elif int(inputs[0]) == 3:
-        category_name = input("Indique el nombre de la categoria que quiere consultar: ")
+        category_name = input("Indique el nombre de la categoria que quiere " +
+                              "consultar: ")
         country = input("Indique el pais de los videos que quiere consultar: ")
-        n_videos = int(input("Indique el tamaño de la muestra que quiere consultar: "))
+        n_videos = int(input("Indique el tamaño de la muestra que quiere " +
+                             "consultar: "))
         videosByCC = controller.sortCountry(catalog, category_name, country)
         videosCCSorted = controller.sortVideolt(videosByCC)
         counter = 1
