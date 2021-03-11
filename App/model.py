@@ -261,3 +261,45 @@ def sortCountry(catalog, category_name, country_name):
 def sortVideoslt(videos):
     sorted_list = mg.sort(videos, cmpVideosByViews)
     return sorted_list
+
+
+def sortTagsName(catalog, tag_name):
+    iteratorTags = lti.newIterator(catalog['videos'])
+    tag_list = lt.newList('ARRAY_LIST')
+    while lti.hasNext(iteratorTags):
+        video = lti.next(iteratorTags)
+        lista = video['tags'].lower()
+        if tag_name.lower() in lista:
+            lt.addLast(tag_list, video)
+    return tag_list
+
+
+def sortLikesTags(catalog, tag_name, n_videos):
+    sortTags = sortTagsName(catalog, tag_name)
+    merge = mg.sort(sortTags, cmpLikes)
+    return lt.subList(merge, 0, n_videos)
+
+
+def sortTitles(catalog):
+    # list_videos = lt.sublist(catalog,1,lt.size(catalog))
+    videos = catalog['videos']
+    sortAlphabeticly = mg.sort(videos, cmpTitleAlphabet)
+    return sortAlphabeticly
+
+
+def sortTrendigDates(catalog, category_name):
+    iteratorCategoriesAll = lti.newIterator(catalog['categories'])
+    category = None
+    while lti.hasNext(iteratorCategoriesAll) and category == None:
+        element = lti.next(iteratorCategoriesAll)
+        print(category_name + element['name'])
+        if category_name.lower() == element['name'].lower():
+            category = element
+
+    sortTitleAlphabeticly = sortTitles(category)
+    iteratorTrending = lti.newIterator(sortTitleAlphabeticly)
+    while lti.hasNext(iteratorTrending):
+        element = lti.next(iteratorTrending)
+        for video in iteratorTrending:
+            pass
+    return None
