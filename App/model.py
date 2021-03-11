@@ -207,11 +207,12 @@ def categorySort(category_id, videos):
 def sortCountry(catalog, category_name, country_name):
     iteratorCategoriesAll = lti.newIterator(catalog['categories'])
     category = None
-    while lti.hasNext(iteratorCategoriesAll) and category == None:
+    while lti.hasNext(iteratorCategoriesAll):
         element = lti.next(iteratorCategoriesAll)
         print(category_name + element['name'])
         if category_name.lower() == element['name'].lower():
             category = element
+            break
 
     iteratorCountry = lti.newIterator(category['videos'])
     country_list = lt.newList('ARRAY_LIST')

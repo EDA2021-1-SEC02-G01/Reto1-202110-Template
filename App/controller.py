@@ -98,6 +98,7 @@ def sortVideolt(videos):
 def sortLikesTags(catalog, tag_name, n_videos):
     return model.sortLikesTags(catalog, tag_name, n_videos)
 
+
 def sortTrending(catalog, category_name):
     return model.sortTrendigDates(catalog, category_name)
 
