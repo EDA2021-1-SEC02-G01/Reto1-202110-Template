@@ -55,7 +55,7 @@ def loadVideos(catalog):
     """
     Carga los videos del archivo.
     """
-    videosfile = cf.data_dir + 'videos/videos-large.csv'
+    videosfile = cf.data_dir + 'videos/videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding="utf-8"))
     for video in input_file:
         model.addVideo(catalog, video)
@@ -87,11 +87,19 @@ def sortCountry(catalog, category_name, country_name):
     """
     return model.sortCountry(catalog, category_name, country_name)
 
+
 def sortVideolt(videos):
     """
     Ordena la lista de videos por views
     """
     return model.sortVideoslt(videos)
 
-# Funciones de consulta sobre el catálogo
 
+def sortLikesTags(catalog, tag_name, n_videos):
+    return model.sortLikesTags(catalog, tag_name, n_videos)
+
+def sortTrending(catalog, category_name):
+    return model.sortTrendigDates(catalog, category_name)
+
+
+# Funciones de consulta sobre el catálogo
