@@ -38,10 +38,14 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- n videos con mas views que son tendencia en un pais " +
-          "determinada una categoria especifica (Req.1)")
-    print("3- conocer cuál es el video que más días ha sido trending para un" +
-          " país específico. (Req. 2) ")
+    print("2- Ordenar videos por views")
+    print("3- Req. 1: n videos con mas views que son tendencia en un pais " +
+          "determinada una categoria especifica.")
+    print("4- Req. 2: ")
+    print("5- Req. 3: Video que mas dias ha sido trending en una " +
+          "categoria especifica.")
+    print("6- Req. 4: n videos diferentes con mas likes con un tag " +
+          "especifico.")
     print("0- Salir")
 
 
@@ -133,6 +137,29 @@ while True:
         print("Channel Title" + trendInfo['channel_title'])
         print("Country: " + trendInfo['country'])
         print("Numero de dias en tendencia: " + str(cuenta))
+    elif int(inputs[0]) == 5:
+        category_name = input("Ingrese el nombre de la categoria que quiere " +
+                              "buscar: ")
+        cat_vid = controller.sortTrending(catalog, category_name)
+        print(cat_vid)
+
+    elif int(inputs[0]) == 6:
+        tag_name = input("Ingrese el nombre del tag que quiere buscar: ")
+        n_videos = int(input("Ingrese el numero de la muestra: "))
+        sortLikesTags = controller.sortLikesTags(catalog, tag_name, n_videos)
+        counter = 1
+        while counter <= n_videos:
+            video = lt.getElement(sortLikesTags, counter)
+            print('\n' +
+                  'title: ' + video['title'],
+                  'channel_title: ' + video['channel_title'],
+                  'publish_time: ' + video['publish_time'],
+                  'views: ' + video['views'],
+                  'likes: ' + video['likes'],
+                  'dislikes: ' + video['dislikes'],
+                  'tags: ' + video['tags'] + '/n'
+                )
+            counter += 1
 
     else:
         sys.exit(0)

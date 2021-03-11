@@ -206,6 +206,12 @@ def compareVideoName(videoname1, video):
     if (videoname1.lower() in video['info']['title'].lower()):
         return 0
     return -1
+def cmpLikes(video1, video2):
+    return int(video1['likes']) < int(video2['likes'])
+
+
+def cmpTitleAlphabet(video1, video2):
+    return str(video1['title']) < str(video2['title'])
 
 
 # Funciones de ordenamiento

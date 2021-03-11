@@ -95,6 +95,14 @@ def sortVideolt(videos):
     return model.sortVideoslt(videos)
 
 
+def sortLikesTags(catalog, tag_name, n_videos):
+    return model.sortLikesTags(catalog, tag_name, n_videos)
+
+
+def sortTrending(catalog, category_name):
+    return model.sortTrendigDates(catalog, category_name)
+
+
 # Funciones de consulta sobre el catálogo
 
 def getTrendVidByCountry(catalog, country_name):
