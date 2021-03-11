@@ -38,13 +38,12 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Ordenar videos por views")
-    print("3- Req. 1: n videos con mas views que son tendencia en un pais " +
+    print("2- Req. 1: n videos con mas views que son tendencia en un pais " +
           "determinada una categoria especifica.")
-    print("4- Req. 2: ")
-    print("5- Req. 3: Video que mas dias ha sido trending en una " +
+    print("3- Req. 2: Video que mas tiempo ha estado trendig en un pais.")
+    print("4- Req. 3: Video que mas dias ha sido trending en una " +
           "categoria especifica.")
-    print("6- Req. 4: n videos diferentes con mas likes con un tag " +
+    print("5- Req. 4: n videos diferentes con mas likes con un tag " +
           "especifico.")
     print("0- Salir")
 
@@ -137,13 +136,19 @@ while True:
         print("Channel Title" + trendInfo['channel_title'])
         print("Country: " + trendInfo['country'])
         print("Numero de dias en tendencia: " + str(cuenta))
-    elif int(inputs[0]) == 5:
+
+    elif int(inputs[0]) == 4:
         category_name = input("Ingrese el nombre de la categoria que quiere " +
                               "buscar: ")
         cat_vid = controller.sortTrending(catalog, category_name)
-        print(cat_vid)
+        elemento = lt.firstElement(cat_vid)
+        print(elemento)
+        print('title: ' + elemento['info']['title'])
+        print('channel_title: ' + elemento['info']['channel_title'])
+        print('category_id: ' + elemento['info']['category_id'])
+        print('numero de dias: ' + str(elemento['cuenta']))
 
-    elif int(inputs[0]) == 6:
+    elif int(inputs[0]) == 5:
         tag_name = input("Ingrese el nombre del tag que quiere buscar: ")
         n_videos = int(input("Ingrese el numero de la muestra: "))
         sortLikesTags = controller.sortLikesTags(catalog, tag_name, n_videos)
@@ -158,7 +163,7 @@ while True:
                   'likes: ' + video['likes'],
                   'dislikes: ' + video['dislikes'],
                   'tags: ' + video['tags'] + '/n'
-                )
+                  )
             counter += 1
 
     else:

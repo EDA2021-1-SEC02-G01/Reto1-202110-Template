@@ -206,6 +206,8 @@ def compareVideoName(videoname1, video):
     if (videoname1.lower() in video['info']['title'].lower()):
         return 0
     return -1
+
+
 def cmpLikes(video1, video2):
     return int(video1['likes']) < int(video2['likes'])
 
@@ -304,8 +306,15 @@ def sortTrendigDates(catalog, category_name):
 
     sortTitleAlphabeticly = sortTitles(category)
     iteratorTrending = lti.newIterator(sortTitleAlphabeticly)
+    lista = lt.newList('ARRAY_LIST', cmpfunction=compareVideoName)
     while lti.hasNext(iteratorTrending):
         element = lti.next(iteratorTrending)
-        for video in iteratorTrending:
-            pass
-    return None
+        vidName = element['title']
+        posVid = lt.isPresent(lista, vidName)
+        if posVid > 0:
+            el = lt.getElement(lista, posVid)
+            el['cuenta'] += 1
+        else:
+            lt.addLast(lista, {'info': element, 'cuenta': 1})
+    lista_ordenada = mg.sort(lista, cmpVideosByDays)
+    return lista_ordenada
