@@ -55,7 +55,7 @@ def loadVideos(catalog):
     """
     Carga los videos del archivo.
     """
-    videosfile = cf.data_dir + 'videos/videos-large.csv'
+    videosfile = cf.data_dir + 'videos/videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding="utf-8"))
     for video in input_file:
         model.addVideo(catalog, video)
@@ -94,4 +94,12 @@ def sortVideolt(videos):
     """
     return model.sortVideoslt(videos)
 
+
 # Funciones de consulta sobre el catálogo
+
+def getTrendVidByCountry(catalog, country_name):
+    """
+    Busca el video que más días ha sido tendencia
+    para un pais especifico
+    """
+    return model.getTrendVidByCountry(catalog, country_name)

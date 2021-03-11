@@ -40,6 +40,8 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- n videos con mas views que son tendencia en un pais " +
           "determinada una categoria especifica (Req.1)")
+    print("3- conocer cuál es el video que más días ha sido trending para un" +
+          " país específico. (Req. 2) ")
     print("0- Salir")
 
 
@@ -121,6 +123,16 @@ while True:
                   'likes: ' + video['likes'],
                   'dislikes: ' + video['dislikes'])
             counter += 1
+
+    elif int(inputs[0]) == 3:
+        country_name = input("Indique el nombre del país que desea buscar: ")
+        trendVid = controller.getTrendVidByCountry(catalog, country_name)
+        trendInfo = trendVid['info']
+        cuenta = trendVid['cuenta']
+        print("Title: " + trendInfo['title'])
+        print("Channel Title" + trendInfo['channel_title'])
+        print("Country: " + trendInfo['country'])
+        print("Numero de dias en tendencia: " + str(cuenta))
 
     else:
         sys.exit(0)
