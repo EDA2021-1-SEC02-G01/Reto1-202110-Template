@@ -126,7 +126,13 @@ while True:
 
     elif int(inputs[0]) == 3:
         country_name = input("Indique el nombre del país que desea buscar: ")
-        country = controller.getTrendVidByCountry(catalog, country_name)
+        trendVid = controller.getTrendVidByCountry(catalog, country_name)
+        trendInfo = trendVid['info']
+        cuenta = trendVid['cuenta']
+        print("Title: " + trendInfo['title'])
+        print("Channel Title" + trendInfo['channel_title'])
+        print("Country: " + trendInfo['country'])
+        print("Numero de dias en tendencia: " + str(cuenta))
 
     else:
         sys.exit(0)

@@ -71,11 +71,13 @@ def newCatalog(list_type: str):
 
 def addVideo(catalog, video):
     # Filtramos la informacion del video con lo que necesitamos
-    filtrado = {'trending_date': video['trending_date'].strip(),
+    filtrado = {'video_id': video['video_id'].strip(),
+                'trending_date': video['trending_date'].strip(),
                 'title': video['title'].strip(),
                 'channel_title': video['channel_title'].strip(),
                 'publish_time': video['publish_time'].strip(),
-                'views': video['views'], 'likes': video['likes'].strip(),
+                'views': video['views'],
+                'likes': video['likes'].strip(),
                 'dislikes': video['dislikes'].strip(),
                 'country': video['country'].strip(),
                 'tags': video['tags'].strip(),
@@ -86,7 +88,7 @@ def addVideo(catalog, video):
     country_name = video['country'].strip()
     # Cada tag, se crea en la lista de videos del catalogo, y se
     # crea un video en la lista de dicho tag (apuntador al libro)
-    addVideoCountry(catalog, country_name, video)
+    addVideoCountry(catalog, country_name, filtrado)
 
 
 def addVideoCountry(catalog, country_name, video):
@@ -120,7 +122,7 @@ def newCountry(name):
     Crea una nueva estructura para modelar los libros de
     un autor y su promedio de ratings
     """
-    country = {'name': "", "videos": None}
+    country = {'name': "", 'videos': ""}
     country['name'] = name.strip()
     country['videos'] = lt.newList('ARRAY_LIST')
     return country
@@ -143,7 +145,30 @@ def videosCountryCategory(category_name, country, n_videos):
     pass
 
 
+def getTrendVidByCountry(catalog, country_name):
+    countries = catalog['countries']
+    posCountry = lt.isPresent(countries, country_name)
+    if posCountry > 0:
+        country = lt.getElement(countries, posCountry)
+    mg.sort(country['videos'], cmpVideosByTitle)
+    iteratorVid = lti.newIterator(country['videos'])
+    trendVids = lt.newList("ARRAY_LIST", cmpfunction=compareVideoName)
+    while lti.hasNext(iteratorVid):
+        video = lti.next(iteratorVid)
+        vidName = video['title']
+        posVid = lt.isPresent(trendVids, vidName)
+        if posVid > 0:
+            el = lt.getElement(trendVids, posVid)
+            el['cuenta'] += 1
+        else:
+            lt.addLast(trendVids, {"info": video, "cuenta": 1})
+    sortedTrendVids = mg.sort(trendVids, cmpVideosByDays)
+    firstTrendVid = lt.firstElement(sortedTrendVids)
+    return firstTrendVid
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
+
 def comparecountries(countryname1, country):
     if (countryname1.lower() in country['name'].lower()):
         return 0
@@ -163,6 +188,24 @@ def cmpVideosByViews(video1, video2):
 
 def cmpCategoriesById(category1, category2):
     return int(category1["category-id"]) < int(category1["category-id"])
+
+
+def cmpVideosByDays(video1, video2):
+    """
+    Devuelve True si los dias que estuvo en trend el video 1 son mayores
+    que los del video2
+    """
+    return video1['cuenta'] > video2['cuenta']
+
+
+def cmpVideosByTitle(video1, video2):
+    return video1['title'] < video2['title']
+
+
+def compareVideoName(videoname1, video):
+    if (videoname1.lower() in video['info']['title'].lower()):
+        return 0
+    return -1
 
 
 # Funciones de ordenamiento
