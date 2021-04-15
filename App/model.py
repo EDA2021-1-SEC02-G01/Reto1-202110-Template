@@ -141,9 +141,6 @@ def newCategory(id, name, videos):
 
 
 # Funciones de consulta
-def videosCountryCategory(category_name, country, n_videos):
-    pass
-
 
 def getTrendVidByCountry(catalog, country_name):
     countries = catalog['countries']
@@ -298,7 +295,7 @@ def sortTitles(catalog):
 def sortTrendigDates(catalog, category_name):
     iteratorCategoriesAll = lti.newIterator(catalog['categories'])
     category = None
-    while lti.hasNext(iteratorCategoriesAll) and category == None:
+    while lti.hasNext(iteratorCategoriesAll) and category is None:
         element = lti.next(iteratorCategoriesAll)
         print(category_name + element['name'])
         if category_name.lower() == element['name'].lower():
